@@ -1,6 +1,9 @@
 abbr -a c cargo
 abbr -a e nvim
 abbr -a vimdiff 'nvim -d'
+abbr -a vim "echo use 'e' you dummkopft;#"
+abbr -a g git
+abbr -a gds 'git diff --staged'
 
 # Check/add userpaths
 set my_paths \

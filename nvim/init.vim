@@ -1,3 +1,13 @@
+"###############################
+"#### PLUGINS
+
+call plug#begin()
+
+Plug 'dag/vim-fish'
+
+call plug#end()
+
+
 set encoding=utf-8
 set printencoding=utf-8
 
@@ -21,3 +31,6 @@ set expandtab
 
 " so i can see
 set background=dark
+
+set mouse=a " enable mouse usage (all modes) in terminals
+
