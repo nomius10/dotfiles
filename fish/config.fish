@@ -4,6 +4,7 @@ abbr -a vimdiff 'nvim -d'
 abbr -a vim "echo use 'e' you dummkopft;#"
 abbr -a g git
 abbr -a gds 'git diff --staged'
+abbr -a py python3
 
 # Check/add userpaths
 set my_paths \

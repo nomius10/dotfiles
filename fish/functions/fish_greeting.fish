@@ -22,12 +22,12 @@ function wanikani_reviews_count
     end
 
     # return relevant data
-    jq ".data.reviews[0].subject_ids | length" /tmp/wk_stats.json
     jq ".data.lessons[0].subject_ids | length" /tmp/wk_stats.json
+    jq ".data.reviews[0].subject_ids | length" /tmp/wk_stats.json
 end
 
 function fish_greeting
     echo "お帰り！今日は"(date +"%y年%m月%d日だ")
     set res (wanikani_reviews_count)
-    echo "WK rev: $res[1] lessons: $res[2]"
+    echo "WK lessons: $res[1] reviews: $res[2]"
 end
