@@ -17,7 +17,8 @@ function wanikani_reviews_count
     end
 
     set last_rev_time (jq '.data.reviews[0].available_at | sub(".[0-9]+Z$"; "Z") | fromdate' /tmp/wk_stats.json)
-    if [ (math (date -u +%s) - $last_rev_time) -gt 3600 ]
+    if  [ (stat -c "%b" /tmp/wk_stats.json) -eq 0 ] || \
+        [ (math (date -u +%s) - $last_rev_time) -gt 3600 ]
         wanikani_reviews_fetch
     end
 
@@ -27,7 +28,7 @@ function wanikani_reviews_count
 end
 
 function fish_greeting
-    echo "お帰り！今日は"(date +"%y年%m月%d日だ")
+    echo "お帰り！今日は"(date +"%y年%m月%d日")
     set res (wanikani_reviews_count)
     echo "WK lessons: $res[1] reviews: $res[2]"
 end
