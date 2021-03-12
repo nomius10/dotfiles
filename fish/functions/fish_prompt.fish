@@ -1,4 +1,21 @@
 function fish_prompt
+    # A prompt inspired by nim prompt, peppered with kana/kanji related to japanese particles
+    #
+    # Shows:
+    # - green kana if the last return command is OK, red otherwise
+    # - your hostname, in cyan/blue if ssh/otherwise
+    # - the current battery state, if any, and if your power cable is unplugged, and if you have "acpi"
+    # - your user name, in red/yellow if root/otherwise
+    # - date +%X
+    # - the current virtual environment, if any
+    # - the current git status, if any, with fish_git_prompt
+    # - the current path (with prompt_pwd)
+    # - number of background jobs, if any
+    #
+    # Example:
+    # ┌SLATEデnomiusガ10:54:34時main=デ「~/.dotfiles」1用
+    # └$
+
     set -l retc red
     test $status = 0; and set retc green
 
