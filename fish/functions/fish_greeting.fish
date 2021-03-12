@@ -28,7 +28,10 @@ function wanikani_reviews_count
 end
 
 function fish_greeting
-    echo "お帰り！今日は"(date +"%y年%m月%d日")
+    set days 月 火 水 木 金 土 日
+    set day $days[(date +"%u")]曜日
+    set date (date +"%y年%m月%d日")
+    echo "お帰り！今日は$date、$day"
     set res (wanikani_reviews_count)
     echo "WK lessons: $res[1] reviews: $res[2]"
 end
