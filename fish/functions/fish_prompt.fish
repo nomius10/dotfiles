@@ -60,6 +60,10 @@ function fish_prompt
     _prompt_wrapper 'ガ' $retc $USER
     # Time
     _prompt_wrapper '時' $retc (date +"%X") normal
+    # PWD
+    set_color normal
+    _prompt_wrapper 'ニ' $retc '「'(prompt_pwd)'」' normal
+    echo -n
     # Virtual Environment
     set -q VIRTUAL_ENV_DISABLE_PROMPT
     or set -g VIRTUAL_ENV_DISABLE_PROMPT true
@@ -68,13 +72,10 @@ function fish_prompt
     # git
     set prompt_git (fish_git_prompt | string trim -c ' ()')
     test -n "$prompt_git"
-    and _prompt_wrapper 'デ' $retc $prompt_git normal
-    # PWD
-    set_color normal
-    echo -n '「'(prompt_pwd)'」'
+    and _prompt_wrapper '枝' $retc $prompt_git normal
     # Background jobs
     test 0 -ne (count (jobs))
-    and _prompt_wrapper '用' $retc (count (jobs))
+    and _prompt_wrapper '用' $retc (count (jobs)) normal
 
     ### LINE 2
     echo ''

@@ -9,7 +9,8 @@ abbr -a py python3
 # Check/add userpaths
 set my_paths \
     $HOME/.cargo/bin \
-    $HOME/bin
+    $HOME/bin \
+    $HOME/.local/bin
 
 for path in $my_paths
     contains $path $fish_user_paths
