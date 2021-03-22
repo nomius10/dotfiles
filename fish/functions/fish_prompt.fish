@@ -16,8 +16,9 @@ function fish_prompt
     # ┌SLATEデnomiusガ10:54:34時main=デ「~/.dotfiles」1用
     # └$
 
+    set _status $status
     set -l retc red
-    test $status = 0; and set retc green
+    test $_status = 0; and set retc green
 
     set -q __fish_git_prompt_showupstream
     or set -g __fish_git_prompt_showupstream auto
@@ -76,6 +77,9 @@ function fish_prompt
     # Background jobs
     test 0 -ne (count (jobs))
     and _prompt_wrapper '用' $retc (count (jobs)) normal
+    # Error code
+    test 0 -ne $_status
+    and _prompt_wrapper '誤' $retc $_status normal
 
     ### LINE 2
     echo ''
