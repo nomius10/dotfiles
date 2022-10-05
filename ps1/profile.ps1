@@ -23,8 +23,11 @@ function get-git-branch {
         if ($branch -eq "HEAD") {
             # probably in detached HEAD state -> print the SHA
             $branch = git rev-parse --short HEAD
-		}
-		return $branch
+	}
+	if ($branch.length -gt 17) {
+            $branch = $branch.Substring(0, 17) + ".."
+	}
+	return $branch
     } catch {
         return $null
     }
@@ -38,7 +41,7 @@ function prompt {
 		0x9053, 0x8AA4		    				# 道誤
 	)
 
-	$cdlim = [ConsoleColor]::Green
+	$cdlim = [ConsoleColor]::Cyan
 	$chost = [ConsoleColor]::DarkCyan
 	$cuser = [ConsoleColor]::Yellow
 	$cdate = [ConsoleColor]::White
@@ -67,14 +70,29 @@ function prompt {
 
 	write-host ''
 	write-host $uc[1] -n -f $cdlim
-	write-host "$" -n -f "Red"
+	write-host "$" -n -f "DarkYellow"
 	return ' '
+}
+
+$HistFiltScriptBlock = { 
+Param([string]$line) 
+	if ($line -like ' *' -or $line.length -le 3) {
+		return $false
+	}
+	return $true
 }
 
 if ($host.Name -match 'ConsoleHost') {
     Import-Module PSReadLine
-	Set-PSReadlineOption -EditMode vi -BellStyle None
 
-	New-Alias -Name vi -Value  'C:\Program Files\vim\vim82\vim.exe'
-	New-Alias -Name vim -Value 'C:\Program Files\vim\vim82\vim.exe'
+    Set-PSReadlineOption -EditMode emacs -BellStyle none
+    Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
+    Set-PSReadlineKeyHandler -Key UpArrow -Function HistorySearchBackward
+    Set-PSReadlineKeyHandler -Key DownArrow -Function HistorySearchForward
+    Set-PSReadLineKeyHandler -Chord Ctrl+RightArrow -Function ForwardWord
+    Set-PSReadLineKeyHandler -Chord Ctrl+LeftArrow -Function BackwardWord
+	# Do not add cmds starting with a space to history
+	Set-PSReadLineOption -AddToHistoryHandler $HistFiltScriptBlock
+
+    $env:TERM = 'xterm' # TODO: ???
 }
