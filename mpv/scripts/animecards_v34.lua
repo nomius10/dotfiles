@@ -283,6 +283,9 @@ local function create_screenshot(s, e)
     table.insert(cmd, '--vf-add=format=rgb24')
   end
   table.insert(cmd, '--vf-add=scale=480*iw*sar/ih:480')
+  if IMAGE_FORMAT == 'jpeg' or IMAGE_FORMAT == 'jpg' then
+    table.insert(cmd, '--vf-add=scale=out_range=pc') -- hotfix for shinchiro's MPV builds
+  end
   table.insert(cmd, string.format('--start=%.3f', mp.get_property_number("time-pos")))
   table.insert(cmd, string.format('-o=%s', img))
   mp.commandv(table.unpack(cmd))
